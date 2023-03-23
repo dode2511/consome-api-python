@@ -36,7 +36,41 @@ def listar():
     
 
 def alterar():
-    pass
+    titulo("Alteração de Produto")
+    id = int(input("Código do produto: "))
+    response = requests.get(url_api+"/"+str(id))
+    produtos = response.json()
+    #if produtos['id'] > 0:
+     #   print("A porra do id ta errado ")
+        
+       
+    print(f"Informe os dados apenas dos atributos a serem alterados. Sem alteração => enter")
+
+    print(f"Descrição: {produtos['descricao']}")
+    descricao = input("Descricao...:")
+
+    print(f"Marca: {produtos['marca']}")
+    marca = input("Marca...:")
+
+    print(f"Quantidade: {produtos['quant']}")
+    quant = input("Quantidade...:")
+
+    print(f"Preço: {produtos['preco']}")
+    preco = input("Preço...:")
+
+    desc_alt =  descricao if descricao != "" else produtos['descricao']
+    marca_alt =  marca if marca != "" else produtos['marca']
+    quant_alt =  quant if quant != "" else produtos['quant']
+    preco_alt = preco if preco != "" else produtos['preco']
+
+    alt_produto = {"descricao": desc_alt, "marca": marca_alt, "quant": quant_alt, "preco": preco_alt} 
+    response2 = requests.put(url_api +"/"+str(id), json=alt_produto)
+    if response2.status_code == 200:
+        print("deu certo!")
+    else:
+        print("F:", response2.status_code)
+
+
 
 def excluir():
     pass
@@ -48,7 +82,7 @@ def estatistica():
     pass
 
 while True:
-    titulo("Cadastro de produtos - consome API" "=")
+    titulo("Cadastro de produtos - consome API")
     print("1. Inclusão de produto")
     print("2. Listagem dos produtos")
     print("3. Alterção de produto")
