@@ -39,10 +39,11 @@ def alterar():
     titulo("Alteração de Produto")
     id = int(input("Código do produto: "))
     response = requests.get(url_api+"/"+str(id))
+    if response.status_code == 404:
+        print("Produto não encontrado.")
+        return
     produtos = response.json()
-    #if produtos['id'] > 0:
-     #   print("A porra do id ta errado ")
-        
+ 
        
     print(f"Informe os dados apenas dos atributos a serem alterados. Sem alteração => enter")
 
